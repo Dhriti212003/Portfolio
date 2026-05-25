@@ -589,7 +589,7 @@ export default function App() {
             <div style={s.contactInfo}>
               {[
                 { icon: "✉", label: "Dhriti's Email", val: "dhritidh947@gmail.com" },
-                { icon: "✉", label: "Pavan's Email", val: "ppasupuletibtech22@ced.alliance.edu.in" },
+                { icon: "✉", label: "Pavan's Email", val: "pasupuletipavan2104@gmail.com" },
                 { icon: "📞", label: "Dhriti's Phone", val: "+91-9035445488" },
                 { icon: "📞", label: "Pavan's Phone", val: "+91 9550904872" },
                 { icon: "⚲", label: "Location", val: "Karnataka, India" },
