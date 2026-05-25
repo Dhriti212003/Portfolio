@@ -1,77 +1,70 @@
 import { useState, useEffect, useRef } from "react";
-import { FiSearch, FiPenTool, FiZap, FiSend, FiX, FiGithub, FiExternalLink } from "react-icons/fi";
+import { FiX, FiGithub, FiExternalLink } from "react-icons/fi";
 
-const NAV_LINKS = ["Services", "Work", "Team", "Process", "Contact"];
+const NAV_LINKS = ["Services", "Work", "Team", "Contact"];
 
 const SERVICES = [
-  { icon: "</>", title: "Full-Stack Web Development", desc: "Modern, scalable web apps built end-to-end with React, Next.js, and Node — pixel-perfect and production-ready." },
-  { icon: "⬡", title: "SaaS Product Development", desc: "From idea to revenue. We design and ship SaaS products with auth, billing, analytics, and infra baked in." },
-  { icon: "⇌", title: "REST API & Backend Systems", desc: "High-performance REST & GraphQL APIs, microservices, and event-driven backends that just scale." },
-  { icon: "◈", title: "UI/UX Design & Prototyping", desc: "Beautiful, accessible interfaces. Figma to code with a strong opinionated design system." },
-  { icon: "▤", title: "Database Architecture", desc: "PostgreSQL, MongoDB, Redis — modeled, indexed, and tuned for the queries your product actually runs." },
-  { icon: "☁", title: "DevOps & Cloud Deployment", desc: "CI/CD, Docker, AWS & Vercel. Zero-downtime deploys with observability you can trust at 3 AM." },
+  { icon: "</>", title: "Full-Stack Web Development", desc: "Scalable web applications built end-to-end with React, Node.js, and the MERN stack — modern and production-ready." },
+  { icon: "📱", title: "Mobile App Development", desc: "Cross-platform mobile applications using React Native with clean architecture and optimized performance." },
+  { icon: "⇌", title: "REST API Development", desc: "High-performance RESTful APIs with secure authentication, authorization, and efficient data management." },
+  { icon: "◈", title: "AI/ML Solutions", desc: "Machine learning models and AI-powered features integrated into web applications for intelligent automation." },
+  { icon: "▤", title: "Database Design & Management", desc: "MongoDB, PostgreSQL, and SQL database architecture optimized for performance and scalability." },
+  { icon: "☁", title: "End-to-End Product Development", desc: "From concept to deployment — building complete, production-ready applications with modern tech stacks." },
 ];
 
-const TECH = ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "MongoDB", "Prisma", "TailwindCSS", "Docker", "AWS", "Vercel", "Figma", "GraphQL", "Redis"];
+const TECH = ["React.js", "React Native", "Node.js", "Express.js", "MongoDB", "Python", "JavaScript", "TypeScript", "Django", "TensorFlow", "Tailwind CSS", "Git", "GitHub", "REST APIs", "JWT", "Socket.io", "PostgreSQL", "Spring Boot"];
 
 const PROJECTS = [
   {
-    tag: "SaaS", title: "Lumen Analytics", desc: "Real-time SaaS analytics platform processing 50M+ events per day with custom dashboards.",
-    longDesc: "Lumen Analytics is a full-scale SaaS observability platform designed for high-throughput data pipelines. It handles over 50 million events per day, offering real-time dashboards, anomaly detection, and customisable alerting. Built with a multi-tenant architecture and role-based access to serve teams of all sizes.",
-    techs: ["Next.js", "PostgreSQL", "Redis", "AWS"], color: "#0f2027",
-    github: "https://github.com/", live: "https://example.com/",
-    highlights: ["50M+ events/day", "Multi-tenant RBAC", "Real-time dashboards", "Custom alerting engine"],
+    tag: "SaaS", title: "DayFlow - Daily Habit Tracker", desc: "Premium daily activity tracking SaaS built with Next.js, TypeScript, and AI-powered insights.",
+    longDesc: "A premium daily activity tracking SaaS built with Next.js 14, TypeScript, Tailwind CSS, and AI-powered insights via OpenRouter. Features daily task tracking, smart scheduling with an intuitive timeline, beautiful analytics with detailed reports and streaks, AI-powered personalized recommendations, achievement badges, full dark mode, and responsive design across desktop and mobile.",
+    techs: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "NextAuth.js"], color: "#1a0d1a",
+    github: "https://github.com/Pavan0-18", live: "https://example.com/",
+    highlights: ["Daily task tracking", "Smart scheduling", "AI-powered insights", "Beautiful analytics", "Achievement badges", "Dark mode"],
   },
   {
-    tag: "SaaS", title: "Nimbus Cloud Console", desc: "Multi-tenant cloud management dashboard with team workspaces and role-based access.",
-    longDesc: "Nimbus is a cloud management console that brings AWS, GCP, and Azure resources under one roof. Teams get isolated workspaces, cost breakdowns, and one-click environment provisioning — no CLI needed.",
-    techs: ["React", "Node.js", "Docker"], color: "#0a1628",
-    github: "https://github.com/", live: "https://example.com/",
-    highlights: ["Multi-cloud support", "Cost analytics", "One-click provisioning", "Audit logs"],
+    tag: "AI/ML", title: "AI-Powered Resume Analyzer", desc: "Intelligent web app for automated resume analysis using NLP and ML.",
+    longDesc: "Developed an intelligent web application for automated resume analysis with PDF parsing and NLP-based skill extraction. Integrated machine learning models through backend APIs and designed dynamic dashboards for visualization of insights and recommendations.",
+    techs: ["React.js", "Node.js", "Python", "NLP", "MongoDB"], color: "#0a1628",
+    github: "https://github.com/Pavan0-18",
+    highlights: ["NLP-based extraction", "PDF parsing", "ML model integration", "Insights dashboard"],
   },
   {
-    tag: "Web App", title: "Orbit Commerce", desc: "Headless e-commerce platform with Stripe Connect and personalised recommendations.",
-    longDesc: "Orbit is a headless commerce engine powering multi-vendor storefronts. It integrates Stripe Connect for split payments, a recommendation engine trained on purchase history, and a CMS for merchants — all behind a blazing-fast Next.js storefront.",
-    techs: ["Next.js", "Prisma", "Stripe"], color: "#0d1f0d",
-    github: "https://github.com/", live: "https://example.com/",
-    highlights: ["Stripe Connect payouts", "AI recommendations", "CMS for merchants", "Edge-cached storefront"],
+    tag: "AI/ML", title: "Fruit Quality Checker", desc: "CNN-based fruit image classification for fresh vs rotten detection.",
+    longDesc: "Built a fruit image classification model using CNN with TensorFlow and Keras. Implemented image loading, preprocessing, and augmentation for robust training. Achieved reliable fresh-vs-rotten prediction with optimized architecture and regularization techniques.",
+    techs: ["Python", "TensorFlow", "Keras", "CNN"], color: "#0d0d1a",
+    github: "https://github.com/Pavan0-18",
+    highlights: ["CNN architecture", "Image augmentation", "Fresh vs rotten", "Model optimization"],
   },
   {
-    tag: "API", title: "Pulse API Gateway", desc: "High-throughput REST gateway handling 10k req/s with rate limiting and observability.",
-    longDesc: "Pulse is a production-grade API gateway that proxies, throttles, and observes traffic across microservices. It supports per-client rate limiting, JWT validation, request tracing, and a real-time metrics dashboard — deployable via Docker in minutes.",
-    techs: ["Node.js", "GraphQL", "Redis"], color: "#1a0a0a",
-    github: "https://github.com/", live: "https://example.com/",
-    highlights: ["10k req/s throughput", "Per-client rate limiting", "JWT auth middleware", "OpenTelemetry tracing"],
+    tag: "Web App", title: "LocalFeed", desc: "Hyperlocal community feed with location-based posts and user authentication.",
+    longDesc: "A hyperlocal community feed web app where users can register, log in, and share posts based on their location. Built the backend using Django with user authentication and SQLite database for location-based content delivery.",
+    techs: ["Python", "Django", "HTML", "SQLite"], color: "#0a0a1a",
+    github: "https://github.com/Pavan0-18",
+    highlights: ["Location-based posts", "User auth", "Django backend", "Community feed"],
   },
   {
-    tag: "Mobile", title: "Mira Fitness", desc: "Cross-platform mobile fitness coach with AI workout planning and wearable sync.",
-    longDesc: "Mira is a React Native fitness app that generates personalised weekly workout plans using an LLM trained on exercise science data. It syncs with Apple Watch and Garmin, tracks progressive overload, and nudges users with smart reminders based on calendar availability.",
-    techs: ["React Native", "Node.js", "MongoDB"], color: "#0d0d1a",
-    github: "https://github.com/", live: "https://example.com/",
-    highlights: ["AI workout planning", "Wearable sync", "Progressive overload tracking", "Smart reminders"],
+    tag: "AI/ML", title: "Fruit Disease Classifier", desc: "Deep learning-based disease classification with pesticide recommendations.",
+    longDesc: "Complete fruit disease classification system using EfficientNet-B4 with ONNX runtime inference. Features real-time image upload and analysis, confidence scoring, Grad-CAM visualizations, region and season-aware treatment recommendations via AI, and PDF report generation. Achieves 98.5% top-1 accuracy across 38 disease classes.",
+    techs: ["Python", "TensorFlow", "Next.js", "ONNX", "TypeScript", "Tailwind CSS"], color: "#0a1a0a",
+    github: "https://github.com/Pavan0-18",
+    highlights: ["38 disease classes", "98.5% accuracy", "AI recommendations", "Grad-CAM visualization", "PDF reports"],
   },
   {
-    tag: "Mobile", title: "Echo Messenger", desc: "End-to-end encrypted team chat with voice rooms and message search at scale.",
-    longDesc: "Echo is a privacy-first team communication app with E2E encryption on every message and file. It supports ephemeral voice rooms via WebRTC, full-text message search across years of history, and offline-first sync so conversations are always available.",
-    techs: ["React Native", "WebRTC", "PostgreSQL"], color: "#0a0a1a",
-    github: "https://github.com/", live: "https://example.com/",
-    highlights: ["E2E encrypted messages", "WebRTC voice rooms", "Full-text search", "Offline-first sync"],
+    tag: "Web App", title: "DevConnect", desc: "A developer networking platform for collaboration and project discovery.",
+    longDesc: "A developer networking platform built to help developers connect, collaborate on open-source projects, and showcase their work. Features profile management, project discovery, and real-time messaging.",
+    techs: ["React.js", "Node.js", "MongoDB", "Socket.io"], color: "#1a1a2e",
+    github: "https://github.com/Pavan0-18",
+    highlights: ["Profile management", "Project discovery", "Real-time messaging", "Developer networking"],
   },
 ];
 
 const TEAM = [
-  { name: "Dhriti R", role: "Frontend Lead & Product Designer", bio: "Crafts the pixel-perfect side of Lioris.", image: "/images/Dhriti_image.png" },
-  { name: "Pasupuleti Pavan", role: "Software Developer", bio: "Lives in distributed systems. Ships APIs that scale to thousands of requests without breaking a sweat.", image: "/images/Pavan_image.jpeg" },
+  { name: "Dhriti R", role: "Full-Stack Developer", bio: "Full-stack developer specializing in the MERN stack with hands-on experience in React Native. Passionate about building scalable web and mobile applications with clean architecture.", image: "/images/Dhriti_image.png", email: "dhritidh947@gmail.com", phone: "+91-9035445488", linkedin: "https://www.linkedin.com/in/dhriti21" },
+  { name: "Pasupuleti Pavan", role: "Full-Stack Developer", bio: "Software developer with expertise in full-stack development, AI/ML, and database technologies. Experienced in building enterprise applications and delivering user-centric solutions.", image: "/images/Pavan_image.jpeg", email: "ppasupuletibtech22@ced.alliance.edu.in", phone: "+91 9550904872", linkedin: "https://www.linkedin.com/in/pasupuleti-pavan/" },
 ];
 
-const PROCESS = [
-  { icon: FiSearch, title: "Discovery & Planning", desc: "We deep-dive into your goals, users, and constraints to scope the right thing." },
-  { icon: FiPenTool, title: "Design & Prototype", desc: "High-fidelity prototypes in Figma, validated before a single line of code." },
-  { icon: FiZap, title: "Build & Test", desc: "Weekly demos, automated tests, and code reviews on every PR." },
-  { icon: FiSend, title: "Deploy & Support", desc: "CI/CD to production, monitoring, and 30 days of post-launch support." },
-];
-
-const FILTER_TABS = ["All", "Web App", "SaaS", "API", "Mobile"];
+const FILTER_TABS = ["All", "Web App", "AI/ML", "SaaS"];
 
 
 const EMAILJS_SERVICE_ID  = "service_491rw2e";
@@ -209,18 +202,20 @@ function ProjectModal({ project, onClose, darkMode, border, muted, fg, cardBg, a
             >
               <FiGithub size={16} /> GitHub
             </a>
-            <a
-              href={project.live} target="_blank" rel="noopener noreferrer"
-              style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
-                gap: 8, padding: "12px 0", borderRadius: 10,
-                background: `linear-gradient(135deg, #7c5cfc, #4fa3e0)`,
-                border: "none", color: "#fff",
-                fontWeight: 700, fontSize: 14, textDecoration: "none",
-              }}
-            >
-              <FiExternalLink size={16} /> Live Site
-            </a>
+            {project.live && (
+              <a
+                href={project.live} target="_blank" rel="noopener noreferrer"
+                style={{
+                  flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
+                  gap: 8, padding: "12px 0", borderRadius: 10,
+                  background: `linear-gradient(135deg, #7c5cfc, #4fa3e0)`,
+                  border: "none", color: "#fff",
+                  fontWeight: 700, fontSize: 14, textDecoration: "none",
+                }}
+              >
+                <FiExternalLink size={16} /> Live Site
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -237,7 +232,7 @@ export default function App() {
   const [formStatus, setFormStatus] = useState("idle");
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const words = ["SaaS Products", "Web Apps", "APIs", "MVPs"];
+  const words = ["Web Apps", "Mobile Apps", "APIs", "Full-Stack Solutions"];
   const wordRef = useRef(0);
   const charRef = useRef(0);
   const deletingRef = useRef(false);
@@ -358,12 +353,6 @@ export default function App() {
     teamName: { fontWeight: 800, fontSize: 17, color: fg, lineHeight: 1.2 },
     teamRole: { color: accent, fontSize: 12, fontWeight: 600, marginBottom: 6 },
     teamBio: { color: muted, fontSize: 13, lineHeight: 1.65 },
-    processLine: { display: "flex", gap: 0, alignItems: "flex-start", position: "relative", marginTop: 60, overflowX: "auto", paddingBottom: 20 },
-    processStep: { flex: 1, minWidth: 160, textAlign: "center", position: "relative", padding: "0 16px" },
-    processIconWrap: { width: 56, height: 56, borderRadius: "50%", background: "linear-gradient(135deg, #7c5cfc, #4fa3e0)", margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, position: "relative", zIndex: 2 },
-    processTitle: { fontWeight: 800, fontSize: 14, marginBottom: 8, color: fg },
-    processDesc: { color: muted, fontSize: 13, lineHeight: 1.65 },
-    processConnector: { position: "absolute", top: 28, left: "calc(50% + 28px)", right: "calc(-50% + 28px)", height: 2, background: `linear-gradient(90deg, ${accent}, #4fa3e0)`, zIndex: 1 },
     contactSection: { background: darkMode ? "#080810" : "#f0f0f5", borderTop: `1px solid ${border}` },
     contactInner: { maxWidth: 1100, margin: "0 auto", padding: "100px 3%", display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 80, alignItems: "start" },
     contactInfo: { display: "flex", flexDirection: "column", gap: 24 },
@@ -436,9 +425,6 @@ export default function App() {
         .team-card-hover:hover .team-photo { transform:scale(1.05); }
         .team-photo { transition:transform 0.4s ease; }
 
-        .process-step-hover:hover .process-icon { transform:scale(1.12) rotate(-8deg); box-shadow:0 8px 24px rgba(124,92,252,0.35); }
-        .process-icon { transition:transform 0.35s ease,box-shadow 0.35s ease; }
-
         .tech-tag-hover:hover { border-color:#7c5cfc !important; color:#7c5cfc !important; transform:translateY(-2px); }
 
         .modal-slide-in { animation:modal-in 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
@@ -463,12 +449,7 @@ export default function App() {
       {/* ── NAV ── */}
       <nav style={s.nav}>
         <div style={s.logo}>
-          {/*
-            Logo image: replace the "L" below with:
-              <img src="/images/lioris_logo.png" alt="Lioris" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-            once you upload your logo asset.
-          */}
-          <div style={s.logoBox}>L</div>
+          <img src="./Lioris (2).png" alt="Lioris Logo" style={s.logoBox} />
           Lioris
         </div>
         <ul style={s.navLinks}>
@@ -485,7 +466,7 @@ export default function App() {
         </ul>
         <div style={s.navRight}>
           <button style={s.themeBtn} onClick={() => setDarkMode(d => !d)}>{darkMode ? "☀" : "⏾"}</button>
-          <button style={s.talkBtn} onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>Let's Talk</button>
+          <button style={s.talkBtn} onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "slow" })}>Contact Us</button>
         </div>
       </nav>
 
@@ -495,21 +476,20 @@ export default function App() {
         <div className="orb" style={{ width: 400, height: 400, background: "rgba(79,163,224,0.1)", top: "20%", right: "5%", animationDelay: "3s" }} />
         <div className="hero-a1" style={s.badge}>
           <span style={s.heroBadgeDot} />
-          Now booking Q3 — 2 slots open
+          Open for opportunities
         </div>
         <h1 className="hero-a2" style={s.heroH1}>
-          We build <span className="shimmer-text">{typedText}</span><span style={s.heroCursor} /><br />that scale.
+          We build <span className="shimmer-text">{typedText}</span><span style={s.heroCursor} /><br />that deliver.
         </h1>
         <p className="hero-a3" style={s.heroSub}>
-          Lioris is a tight-knit duo of full-stack engineers shipping premium products for founders who care about craft. From zero to launched in weeks — not quarters.
+          We are Dhriti and Pavan — two full-stack developers passionate about building efficient, user-centric applications. From web and mobile apps to AI-powered solutions, we ship products that make an impact.
         </p>
         <div className="hero-a4" style={s.heroButtons}>
           <button style={s.btnPrimary} onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}>View Our Work →</button>
-          <button style={s.btnOutline} onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>Let's Talk</button>
+          <button style={s.btnOutline} onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>Get in Touch</button>
         </div>
-        {/* Stats: only "Currently available" */}
         <div className="hero-a4" style={s.heroStats}>
-          <span className="pulse-wrap">Currently available</span>
+          <span className="pulse-wrap">Available for opportunities</span>
         </div>
       </section>
 
@@ -517,8 +497,8 @@ export default function App() {
       <div id="services" style={{ background: darkMode ? "#060609" : "#f8f8fc", borderTop: `1px solid ${border}` }}>
         <div style={s.section}>
           <div style={s.sectionTag}>What We Do</div>
-          <h2 style={s.sectionH2}>Services built for ambitious teams</h2>
-          <p style={s.sectionSub}>A focused offering. No fluff. Just the things that move the needle for product-led companies.</p>
+          <h2 style={s.sectionH2}>Our expertise & capabilities</h2>
+          <p style={s.sectionSub}>From frontend to backend, AI to mobile — we cover the full stack to bring your ideas to life.</p>
           <RevealGrid style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
             {SERVICES.map(svc => (
               <div key={svc.title} style={s.card} className="card-hover">
@@ -534,8 +514,8 @@ export default function App() {
       {/* ── TECH ── */}
       <div style={s.techSection}>
         <div style={s.sectionTag}>Our Tech</div>
-        <h2 style={{ ...s.sectionH2, textAlign: "center" }}>The stack we love</h2>
-        <p style={{ ...s.sectionSub, margin: "0 auto", textAlign: "center" }}>Battle-tested tools chosen for scale, DX, and longevity.</p>
+        <h2 style={{ ...s.sectionH2, textAlign: "center" }}>Technologies we work with</h2>
+        <p style={{ ...s.sectionSub, margin: "0 auto", textAlign: "center" }}>Modern tools and frameworks we use to build production-ready applications.</p>
         <div style={s.techTags}>
           {TECH.map(t => <span key={t} style={s.techTag} className="tech-tag-hover">{t}</span>)}
         </div>
@@ -544,9 +524,9 @@ export default function App() {
       {/* ── WORK ── */}
       <div id="work" style={{ background: bg }}>
         <div style={s.section}>
-          <div style={s.sectionTag}>Selected Work</div>
-          <h2 style={s.sectionH2}>Products we've shipped</h2>
-          <p style={s.sectionSub}>A few of the launches we're proud of. Every one of these is live and revenue-generating.</p>
+          <div style={s.sectionTag}>Our Projects</div>
+          <h2 style={s.sectionH2}>What we've built</h2>
+          <p style={s.sectionSub}>A selection of projects showcasing our skills across web, mobile, AI/ML, and full-stack development.</p>
           <div style={s.filterRow}>
             {FILTER_TABS.map(f => (
               <button key={f} style={s.filterBtn(activeFilter === f)} onClick={() => setActiveFilter(f)}>{f}</button>
@@ -575,9 +555,9 @@ export default function App() {
       {/* ── TEAM ── */}
       <div id="team" style={{ background: darkMode ? "#060609" : "#f0f0f5", borderTop: `1px solid ${border}` }}>
         <div style={s.section}>
-          <div style={{ ...s.sectionTag, textAlign: "center" }}>The Team</div>
-          <h2 style={{ ...s.sectionH2, textAlign: "center" }}>Two engineers. One mission.</h2>
-          <p style={{ ...s.sectionSub, margin: "0 auto 60px", textAlign: "center" }}>No agency middlemen. You work directly with the people writing your code.</p>
+          <div style={{ ...s.sectionTag, textAlign: "center" }}>About Us</div>
+          <h2 style={{ ...s.sectionH2, textAlign: "center" }}>Meet the developers</h2>
+          <p style={{ ...s.sectionSub, margin: "0 auto 60px", textAlign: "center" }}>Two passionate engineers building the future, one project at a time.</p>
           <div style={s.teamGrid}>
             {TEAM.map(t => (
               <div key={t.name} style={s.teamCard} className="team-card-hover">
@@ -586,6 +566,10 @@ export default function App() {
                   <div style={s.teamName}>{t.name}</div>
                   <div style={s.teamRole}>{t.role}</div>
                   <div style={s.teamBio}>{t.bio}</div>
+                  <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                    <a href={`mailto:${t.email}`} style={{ color: accent, fontSize: 12, fontWeight: 600, textDecoration: "none" }}>Email</a>
+                    <a href={t.linkedin} target="_blank" rel="noopener noreferrer" style={{ color: accent, fontSize: 12, fontWeight: 600, textDecoration: "none" }}>LinkedIn</a>
+                  </div>
                 </div>
               </div>
             ))}
@@ -593,40 +577,22 @@ export default function App() {
         </div>
       </div>
 
-      {/* ── PROCESS ── */}
-      <div id="process" style={{ background: bg, borderTop: `1px solid ${border}` }}>
-        <div style={s.section}>
-          <div style={{ ...s.sectionTag, textAlign: "center" }}>How We Work</div>
-          <h2 style={{ ...s.sectionH2, textAlign: "center" }}>A predictable, calm process</h2>
-          <p style={{ ...s.sectionSub, margin: "0 auto", textAlign: "center" }}>Same playbook every time. You'll never wonder what we're doing or when you'll see progress.</p>
-          <div style={s.processLine}>
-            {PROCESS.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.title} style={s.processStep} className="process-step-hover">
-                  {i < PROCESS.length - 1 && <div style={s.processConnector} />}
-                  <div style={s.processIconWrap} className="process-icon"><Icon size={24} color="#fff" /></div>
-                  <div style={s.processTitle}>{step.title}</div>
-                  <div style={s.processDesc}>{step.desc}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+
 
       {/* ── CONTACT ── */}
       <div id="contact" style={s.contactSection}>
         <div style={s.contactInner}>
           <div>
             <div style={s.sectionTag}>Get In Touch</div>
-            <h2 style={s.sectionH2}>Let's build something great</h2>
-            <p style={{ ...s.sectionSub, marginBottom: 40 }}>Tell us about your project. We reply to every email within 24 hours.</p>
+            <h2 style={s.sectionH2}>Let's work together</h2>
+            <p style={{ ...s.sectionSub, marginBottom: 40 }}>Have a project in mind? Reach out to either of us and we'll get back to you.</p>
             <div style={s.contactInfo}>
               {[
-                { icon: "✉", label: "Email", val: "dhritidh947@gmail.com" },
-                { icon: "⚲", label: "Location", val: "Remote · GMT +5:30 / GMT -5" },
-                { icon: "⏱", label: "Response Time", val: "Within 24 hours" },
+                { icon: "✉", label: "Dhriti's Email", val: "dhritidh947@gmail.com" },
+                { icon: "✉", label: "Pavan's Email", val: "ppasupuletibtech22@ced.alliance.edu.in" },
+                { icon: "📞", label: "Dhriti's Phone", val: "+91-9035445488" },
+                { icon: "📞", label: "Pavan's Phone", val: "+91 9550904872" },
+                { icon: "⚲", label: "Location", val: "Karnataka, India" },
               ].map(item => (
                 <div key={item.label} style={s.contactItem}>
                   <div style={s.contactIconBox}>{item.icon}</div>
@@ -655,7 +621,7 @@ export default function App() {
             </div>
             {formStatus === "success" && (
               <div className="pop-in" style={{ background: "#0d2a1a", border: "1px solid #22c55e", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#22c55e", textAlign: "center" }}>
-                Message sent! We'll get back to you within 24 hours.
+                Message sent! We'll get back to you shortly.
               </div>
             )}
             {formStatus === "error" && (
@@ -675,10 +641,10 @@ export default function App() {
         <div style={s.footerInner}>
           <div>
             <div style={s.logo}>
-              <div style={s.logoBox}>L</div>
+              <div style={{ ...s.logoBox, fontSize: 11, fontWeight: 900 }}>DP</div>
               Lioris
             </div>
-            <div style={s.footerDesc}>We build products that scale. A boutique full-stack development studio.</div>
+            <div style={s.footerDesc}>Full-stack developers building modern web and mobile applications. Based in Karnataka, India.</div>
           </div>
           <div>
             <div style={s.footerColTitle}>Quick Links</div>
@@ -693,14 +659,14 @@ export default function App() {
           <div>
             <div style={s.footerColTitle}>Social</div>
             <ul style={s.footerLinks}>
-              {["GitHub", "LinkedIn", "Twitter"].map(soc => (
-                <li key={soc}><span style={s.footerLink}>{soc}</span></li>
-              ))}
+              <li><a href="https://github.com/Pavan0-18" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Pavan's GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/pasupuleti-pavan/" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Pavan's LinkedIn</a></li>
+              <li><a href="https://www.linkedin.com/in/dhriti21" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Dhriti's LinkedIn</a></li>
             </ul>
           </div>
         </div>
         <div style={s.footerBottom}>
-          <span>© 2025 Lioris. All rights reserved.</span>
+          <span>© 2025 Dhriti R & Pasupuleti Pavan. All rights reserved.</span>
           <span>Built with ♥ and a lot of caffeine</span>
         </div>
       </footer>
