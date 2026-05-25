@@ -1,6 +1,5 @@
-
 import { useState, useEffect, useRef } from "react";
-import { FiSearch, FiPenTool, FiZap, FiSend } from "react-icons/fi";
+import { FiSearch, FiPenTool, FiZap, FiSend, FiX, FiGithub, FiExternalLink } from "react-icons/fi";
 
 const NAV_LINKS = ["Services", "Work", "Team", "Process", "Contact"];
 
@@ -16,16 +15,52 @@ const SERVICES = [
 const TECH = ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "MongoDB", "Prisma", "TailwindCSS", "Docker", "AWS", "Vercel", "Figma", "GraphQL", "Redis"];
 
 const PROJECTS = [
-  { tag: "SaaS", title: "Lumen Analytics", desc: "Real-time SaaS analytics platform processing 50M+ events per day with custom dashboards.", techs: ["Next.js", "PostgreSQL", "Redis", "AWS"], color: "#0f2027" },
-  { tag: "SaaS", title: "Nimbus Cloud Console", desc: "Multi-tenant cloud management dashboard with team workspaces and role-based access.", techs: ["React", "Node.js", "Docker"], color: "#0a1628" },
-  { tag: "Web App", title: "Orbit Commerce", desc: "Headless e-commerce platform with Stripe Connect and personalized recommendations.", techs: ["Next.js", "Prisma", "Stripe"], color: "#0d1f0d" },
-  { tag: "API", title: "Pulse API Gateway", desc: "High-throughput REST gateway handling 10k req/s with rate limiting and observability.", techs: ["Node.js", "GraphQL", "Redis"], color: "#1a0a0a" },
-  { tag: "Mobile", title: "Mira Fitness", desc: "Cross-platform mobile fitness coach with AI workout planning and wearable sync.", techs: ["React Native", "Node.js", "MongoDB"], color: "#0d0d1a" },
-  { tag: "Mobile", title: "Echo Messenger", desc: "End-to-end encrypted team chat with voice rooms and message search at scale.", techs: ["React Native", "WebRTC", "PostgreSQL"], color: "#0a0a1a" },
+  {
+    tag: "SaaS", title: "Lumen Analytics", desc: "Real-time SaaS analytics platform processing 50M+ events per day with custom dashboards.",
+    longDesc: "Lumen Analytics is a full-scale SaaS observability platform designed for high-throughput data pipelines. It handles over 50 million events per day, offering real-time dashboards, anomaly detection, and customisable alerting. Built with a multi-tenant architecture and role-based access to serve teams of all sizes.",
+    techs: ["Next.js", "PostgreSQL", "Redis", "AWS"], color: "#0f2027",
+    github: "https://github.com/", live: "https://example.com/",
+    highlights: ["50M+ events/day", "Multi-tenant RBAC", "Real-time dashboards", "Custom alerting engine"],
+  },
+  {
+    tag: "SaaS", title: "Nimbus Cloud Console", desc: "Multi-tenant cloud management dashboard with team workspaces and role-based access.",
+    longDesc: "Nimbus is a cloud management console that brings AWS, GCP, and Azure resources under one roof. Teams get isolated workspaces, cost breakdowns, and one-click environment provisioning — no CLI needed.",
+    techs: ["React", "Node.js", "Docker"], color: "#0a1628",
+    github: "https://github.com/", live: "https://example.com/",
+    highlights: ["Multi-cloud support", "Cost analytics", "One-click provisioning", "Audit logs"],
+  },
+  {
+    tag: "Web App", title: "Orbit Commerce", desc: "Headless e-commerce platform with Stripe Connect and personalised recommendations.",
+    longDesc: "Orbit is a headless commerce engine powering multi-vendor storefronts. It integrates Stripe Connect for split payments, a recommendation engine trained on purchase history, and a CMS for merchants — all behind a blazing-fast Next.js storefront.",
+    techs: ["Next.js", "Prisma", "Stripe"], color: "#0d1f0d",
+    github: "https://github.com/", live: "https://example.com/",
+    highlights: ["Stripe Connect payouts", "AI recommendations", "CMS for merchants", "Edge-cached storefront"],
+  },
+  {
+    tag: "API", title: "Pulse API Gateway", desc: "High-throughput REST gateway handling 10k req/s with rate limiting and observability.",
+    longDesc: "Pulse is a production-grade API gateway that proxies, throttles, and observes traffic across microservices. It supports per-client rate limiting, JWT validation, request tracing, and a real-time metrics dashboard — deployable via Docker in minutes.",
+    techs: ["Node.js", "GraphQL", "Redis"], color: "#1a0a0a",
+    github: "https://github.com/", live: "https://example.com/",
+    highlights: ["10k req/s throughput", "Per-client rate limiting", "JWT auth middleware", "OpenTelemetry tracing"],
+  },
+  {
+    tag: "Mobile", title: "Mira Fitness", desc: "Cross-platform mobile fitness coach with AI workout planning and wearable sync.",
+    longDesc: "Mira is a React Native fitness app that generates personalised weekly workout plans using an LLM trained on exercise science data. It syncs with Apple Watch and Garmin, tracks progressive overload, and nudges users with smart reminders based on calendar availability.",
+    techs: ["React Native", "Node.js", "MongoDB"], color: "#0d0d1a",
+    github: "https://github.com/", live: "https://example.com/",
+    highlights: ["AI workout planning", "Wearable sync", "Progressive overload tracking", "Smart reminders"],
+  },
+  {
+    tag: "Mobile", title: "Echo Messenger", desc: "End-to-end encrypted team chat with voice rooms and message search at scale.",
+    longDesc: "Echo is a privacy-first team communication app with E2E encryption on every message and file. It supports ephemeral voice rooms via WebRTC, full-text message search across years of history, and offline-first sync so conversations are always available.",
+    techs: ["React Native", "WebRTC", "PostgreSQL"], color: "#0a0a1a",
+    github: "https://github.com/", live: "https://example.com/",
+    highlights: ["E2E encrypted messages", "WebRTC voice rooms", "Full-text search", "Offline-first sync"],
+  },
 ];
 
 const TEAM = [
-  { name: "Dhriti R", role: "Frontend Lead & Product Designer", bio: "Crafts the pixel-perfect side of Vexora.", image: "/images/Dhriti_image.png" },
+  { name: "Dhriti R", role: "Frontend Lead & Product Designer", bio: "Crafts the pixel-perfect side of Lioris.", image: "/images/Dhriti_image.png" },
   { name: "Pasupuleti Pavan", role: "Software Developer", bio: "Lives in distributed systems. Ships APIs that scale to thousands of requests without breaking a sweat.", image: "/images/Pavan_image.jpeg" },
 ];
 
@@ -37,6 +72,7 @@ const PROCESS = [
 ];
 
 const FILTER_TABS = ["All", "Web App", "SaaS", "API", "Mobile"];
+
 
 const EMAILJS_SERVICE_ID  = "service_491rw2e";
 const EMAILJS_TEMPLATE_ID = "template_ng8svy8";
@@ -58,7 +94,6 @@ function useInView(threshold = 0.1) {
   return [ref, inView];
 }
 
-// ── FIXED: ref goes on the grid itself, so cards are direct children of .reveal-group
 function RevealGrid({ children, style, className = "" }) {
   const [ref, inView] = useInView(0.1);
   return (
@@ -68,59 +103,180 @@ function RevealGrid({ children, style, className = "" }) {
   );
 }
 
+// ── Project Detail Modal ──────────────────────────────────────────────────────
+function ProjectModal({ project, onClose, darkMode, border, muted, fg, cardBg, accent }) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", onKey); };
+  }, [onClose]);
+
+  if (!project) return null;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, zIndex: 1000,
+        background: "rgba(0,0,0,0.72)", backdropFilter: "blur(8px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "24px 16px",
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        className="modal-slide-in"
+        style={{
+          background: cardBg, border: `1px solid ${border}`,
+          borderRadius: 20, maxWidth: 640, width: "100%",
+          maxHeight: "90vh", overflowY: "auto",
+          boxShadow: "0 32px 80px rgba(0,0,0,0.5)",
+          display: "flex", flexDirection: "column",
+        }}
+      >
+        {/* Header image strip */}
+        <div style={{
+          height: 160,
+          background: `linear-gradient(135deg, ${project.color}, ${project.color}88)`,
+          borderRadius: "20px 20px 0 0",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "0 28px", position: "relative", flexShrink: 0,
+        }}>
+          <span style={{
+            background: "rgba(255,255,255,0.12)", borderRadius: 8,
+            padding: "4px 12px", fontSize: 12, fontWeight: 700, color: "#fff",
+            backdropFilter: "blur(4px)",
+          }}>{project.tag}</span>
+          <span style={{ fontSize: 64, opacity: 0.25 }}>⬡</span>
+          <button onClick={onClose} style={{
+            background: "rgba(255,255,255,0.12)", border: "none",
+            borderRadius: "50%", width: 36, height: 36, cursor: "pointer",
+            color: "#fff", display: "flex", alignItems: "center", justifyContent: "center",
+            backdropFilter: "blur(4px)",
+          }}><FiX size={18} /></button>
+        </div>
+
+        {/* Body */}
+        <div style={{ padding: "28px 32px 32px", display: "flex", flexDirection: "column", gap: 20 }}>
+          <h2 style={{ fontSize: "1.7rem", fontWeight: 900, color: fg, lineHeight: 1.2 }}>{project.title}</h2>
+          <p style={{ color: muted, fontSize: 14, lineHeight: 1.8 }}>{project.longDesc}</p>
+
+          {/* Highlights */}
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: muted, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Highlights</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              {project.highlights.map(h => (
+                <div key={h} style={{
+                  background: darkMode ? "#111120" : "#f5f5ff",
+                  border: `1px solid ${border}`, borderRadius: 10,
+                  padding: "10px 14px", fontSize: 13, fontWeight: 600, color: fg,
+                  display: "flex", alignItems: "center", gap: 8,
+                }}>
+                  <span style={{ color: accent, fontSize: 16 }}>›</span> {h}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tech stack */}
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: muted, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Tech Stack</div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {project.techs.map(t => (
+                <span key={t} style={{
+                  background: darkMode ? "#1a1a2e" : "#f0f0fa",
+                  color: accent, fontSize: 12, fontWeight: 700,
+                  borderRadius: 8, padding: "5px 12px",
+                }}>{t}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Links */}
+          <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
+            <a
+              href={project.github} target="_blank" rel="noopener noreferrer"
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
+                gap: 8, padding: "12px 0", borderRadius: 10,
+                background: darkMode ? "#111120" : "#f0f0f5",
+                border: `1px solid ${border}`, color: fg,
+                fontWeight: 700, fontSize: 14, textDecoration: "none",
+                transition: "border-color 0.2s",
+              }}
+              className="modal-link-hover"
+            >
+              <FiGithub size={16} /> GitHub
+            </a>
+            <a
+              href={project.live} target="_blank" rel="noopener noreferrer"
+              style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
+                gap: 8, padding: "12px 0", borderRadius: 10,
+                background: `linear-gradient(135deg, #7c5cfc, #4fa3e0)`,
+                border: "none", color: "#fff",
+                fontWeight: 700, fontSize: 14, textDecoration: "none",
+              }}
+            >
+              <FiExternalLink size={16} /> Live Site
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Main App ──────────────────────────────────────────────────────────────────
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [activeFilter, setActiveFilter] = useState("All");
   const [typedText, setTypedText] = useState("");
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [formStatus, setFormStatus] = useState("idle");
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const words = ["SaaS Products", "Web Apps", "APIs", "MVPs"];
   const wordRef = useRef(0);
   const charRef = useRef(0);
   const deletingRef = useRef(false);
 
- useEffect(() => {
-  let timeout;
-
-  const type = () => {
-    const word = words[wordRef.current];
-
-    if (!deletingRef.current) {
-      charRef.current++;
-      setTypedText(word.slice(0, charRef.current));
-
-      if (charRef.current === word.length) {
-        deletingRef.current = true;
-        timeout = setTimeout(type, 1000); // pause after typing
-        return;
+  useEffect(() => {
+    let timeout;
+    const type = () => {
+      const word = words[wordRef.current];
+      if (!deletingRef.current) {
+        charRef.current++;
+        setTypedText(word.slice(0, charRef.current));
+        if (charRef.current === word.length) {
+          deletingRef.current = true;
+          timeout = setTimeout(type, 1000);
+          return;
+        }
+      } else {
+        charRef.current--;
+        setTypedText(word.slice(0, charRef.current));
+        if (charRef.current === 0) {
+          deletingRef.current = false;
+          wordRef.current = (wordRef.current + 1) % words.length;
+        }
       }
-    } else {
-      charRef.current--;
-      setTypedText(word.slice(0, charRef.current));
-
-      if (charRef.current === 0) {
-        deletingRef.current = false;
-        wordRef.current = (wordRef.current + 1) % words.length;
-      }
-    }
-
-    timeout = setTimeout(type, deletingRef.current ? 60 : 140);
-  };
-
-  type();
-  return () => clearTimeout(timeout);
-}, []);
+      timeout = setTimeout(type, deletingRef.current ? 60 : 140);
+    };
+    type();
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
-    script.onload = () => window.emailjs.init(EMAILJS_PUBLIC_KEY);
+    script.onload = () => window.emailjs?.init(EMAILJS_PUBLIC_KEY);
     document.head.appendChild(script);
   }, []);
 
   const handleSend = async () => {
-    const { name, email, budget, message } = formData;
+    const { name, email, message } = formData;
     if (!name.trim() || !email.trim() || !message.trim()) {
       alert("Please fill in your name, email, and project description.");
       return;
@@ -128,14 +284,11 @@ export default function App() {
     setFormStatus("sending");
     try {
       await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name: name,
-        from_email: email,
-        
-        message: message,
+        from_name: name, from_email: email, message,
         to_email: "dhritidh947@gmail.com",
       });
       setFormStatus("success");
-      setFormData({ name: "", email: "",  message: "" });
+      setFormData({ name: "", email: "", message: "" });
     } catch (err) {
       console.error(err);
       setFormStatus("error");
@@ -144,18 +297,19 @@ export default function App() {
 
   const filteredProjects = activeFilter === "All" ? PROJECTS : PROJECTS.filter(p => p.tag === activeFilter);
 
-  const bg      = darkMode ? "#0a0a0f" : "#f5f5f7";
-  const fg      = darkMode ? "#ffffff" : "#0a0a0f";
-  const cardBg  = darkMode ? "#111118" : "#ffffff";
-  const border  = darkMode ? "#1e1e2e" : "#e5e5ea";
-  const muted   = darkMode ? "#888899" : "#666677";
-  const accent  = "#7c5cfc";
+  const bg     = darkMode ? "#0a0a0f" : "#f5f5f7";
+  const fg     = darkMode ? "#ffffff" : "#0a0a0f";
+  const cardBg = darkMode ? "#111118" : "#ffffff";
+  const border = darkMode ? "#1e1e2e" : "#e5e5ea";
+  const muted  = darkMode ? "#888899" : "#666677";
+  const accent = "#7c5cfc";
 
   const s = {
     root: { fontFamily: "'Syne', 'DM Sans', sans-serif", background: bg, color: fg, minHeight: "100vh", transition: "background 0.3s, color 0.3s", overflowX: "clip" },
     nav: { position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 3%", height: 64, background: darkMode ? "rgba(10,10,15,0.85)" : "rgba(245,245,247,0.85)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${border}` },
     logo: { display: "flex", alignItems: "center", gap: 10, fontWeight: 800, fontSize: 18, color: fg, textDecoration: "none" },
-    logoBox: { width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg, #7c5cfc, #4fa3e0)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, color: "#fff", fontSize: 14, flexShrink: 0 },
+    // Logo box: replace the "L" text with an <img> once you have the asset
+    logoBox: { width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg, #7c5cfc, #4fa3e0)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, color: "#fff", fontSize: 14, flexShrink: 0, overflow: "hidden" },
     navLinks: { display: "flex", gap: 28, listStyle: "none", margin: 0, padding: 0 },
     navLink: { color: muted, fontSize: 14, cursor: "pointer", transition: "color 0.2s", fontWeight: 500, textDecoration: "none" },
     navRight: { display: "flex", alignItems: "center", gap: 12 },
@@ -164,20 +318,21 @@ export default function App() {
     hero: { minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "80px 3% 40px", position: "relative" },
     badge: { display: "inline-flex", alignItems: "center", gap: 8, background: darkMode ? "#1a1a2e" : "#ebebf5", border: `1px solid ${border}`, borderRadius: 20, padding: "6px 16px", fontSize: 13, color: muted, marginBottom: 32, fontWeight: 500 },
     heroBadgeDot: { width: 7, height: 7, borderRadius: "50%", background: "#22d3ee", display: "inline-block", boxShadow: "0 0 8px #22d3ee", flexShrink: 0 },
-    heroH1: { fontSize: "clamp(2.6rem, 7vw, 5.2rem)", fontWeight: 700, lineHeight: 1.08, marginBottom: 24, maxWidth: 900 },
+    // Heading: wide, compressed height — large font, tight line-height, generous maxWidth
+    heroH1: { fontSize: "clamp(2.2rem, 5.5vw, 4.2rem)", fontWeight: 800, lineHeight: 1.05, marginBottom: 24, maxWidth: 1100, letterSpacing: "-0.02em" },
     heroTyped: { background: "linear-gradient(90deg, #7c5cfc, #4fa3e0)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" },
     heroCursor: { display: "inline-block", width: 3, height: "0.85em", background: accent, verticalAlign: "middle", marginLeft: 3, animation: "blink 1s step-end infinite" },
     heroSub: { fontSize: "clamp(0.95rem, 2vw, 1.15rem)", color: muted, maxWidth: 540, lineHeight: 1.75, marginBottom: 40 },
     heroButtons: { display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginBottom: 56 },
     btnPrimary: { background: "linear-gradient(135deg, #7c5cfc, #5e8ef7)", color: "#fff", border: "none", borderRadius: 10, padding: "14px 28px", fontWeight: 700, cursor: "pointer", fontSize: 15, display: "flex", alignItems: "center", gap: 8 },
     btnOutline: { background: "none", color: fg, border: `1px solid ${border}`, borderRadius: 10, padding: "14px 28px", fontWeight: 700, cursor: "pointer", fontSize: 15 },
+    // Stats: only "Currently available"
     heroStats: { display: "flex", gap: 28, alignItems: "center", color: muted, fontSize: 13, flexWrap: "wrap", justifyContent: "center" },
-    statDot: { width: 7, height: 7, borderRadius: "50%", background: "#22c55e", display: "inline-block", marginRight: 6 },
     section: { padding: "100px 3%", maxWidth: 1200, margin: "0 auto" },
-    sectionTag: { fontSize:22, fontWeight: 720,  textTransform: "uppercase", color: accent, marginBottom: 12 },
-    sectionH2: { fontSize: "clamp(1.9rem, 4vw, 2.8rem)", fontWeight: 900, marginBottom: 16, lineHeight: 1.15 },
+    sectionTag: { fontSize: 22, fontWeight: 720, textTransform: "uppercase", color: accent, marginBottom: 12 },
+    // Section headings: wider, less tall
+    sectionH2: { fontSize: "clamp(1.6rem, 3.2vw, 2.4rem)", fontWeight: 900, marginBottom: 16, lineHeight: 1.1, letterSpacing: "-0.02em" },
     sectionSub: { color: muted, fontSize: 15, lineHeight: 1.75, maxWidth: 520, marginBottom: 56 },
-    grid3: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, alignItems: "start" },
     card: { background: cardBg, border: `1px solid ${border}`, borderRadius: 16, padding: "28px 24px", display: "flex", flexDirection: "column", gap: 0, transition: "border-color 0.2s, transform 0.2s", height: "100%", boxSizing: "border-box" },
     cardIconWrap: { width: 44, height: 44, borderRadius: 12, background: darkMode ? "#1a1a30" : "#f0f0ff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, marginBottom: 16, border: `1px solid ${border}`, flexShrink: 0 },
     cardTitle: { fontWeight: 700, fontSize: 16, marginBottom: 10, lineHeight: 1.3, color: fg },
@@ -195,7 +350,7 @@ export default function App() {
     projDesc: { color: muted, fontSize: 13, lineHeight: 1.65, marginBottom: 14, flexGrow: 1 },
     tags: { display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 },
     tag: { background: darkMode ? "#1a1a2e" : "#f0f0fa", color: accent, fontSize: 11, fontWeight: 700, borderRadius: 6, padding: "3px 10px" },
-    caseLink: { color: accent, fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 },
+    viewBtn: { color: accent, fontSize: 13, fontWeight: 700, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 4, background: "none", border: "none", padding: 0, fontFamily: "inherit" },
     teamGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24, justifyItems: "center" },
     teamCard: { background: darkMode ? "linear-gradient(135deg, rgba(20,20,35,0.9), rgba(15,15,25,0.7))" : "#ffffff", border: `1px solid ${border}`, borderRadius: 20, padding: "24px 28px", display: "flex", gap: 22, alignItems: "center", width: "100%", maxWidth: 420, boxSizing: "border-box", backdropFilter: "blur(12px)", transition: "all 0.3s ease" },
     teamImage: { width: 100, height: 130, borderRadius: 14, objectFit: "cover", border: `2px solid ${border}`, boxShadow: "0 8px 20px rgba(0,0,0,0.25)", flexShrink: 0 },
@@ -217,11 +372,10 @@ export default function App() {
     contactLabel: { fontSize: 11, fontWeight: 700, color: muted, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 },
     contactVal: { fontWeight: 600, fontSize: 15, color: fg },
     formCard: { background: cardBg, border: `1px solid ${border}`, borderRadius: 20, padding: 32, boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 16 },
-    formRow: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 0 },
-    formGroup: { marginBottom: 16, display: "flex", flexDirection: "column" },
+    formRow: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 },
+    formGroup: { display: "flex", flexDirection: "column" },
     label: { display: "block", fontSize: 12, fontWeight: 700, color: muted, marginBottom: 7, textTransform: "uppercase", letterSpacing: "0.08em" },
     input: { width: "100%", background: darkMode ? "#0d0d18" : "#f8f8fc", border: `1px solid ${border}`, borderRadius: 10, padding: "12px 14px", color: fg, fontSize: 14, boxSizing: "border-box", outline: "none", fontFamily: "inherit" },
-    select: { width: "100%", background: darkMode ? "#0d0d18" : "#f8f8fc", border: `1px solid ${border}`, borderRadius: 10, padding: "12px 14px", color: fg, fontSize: 14, boxSizing: "border-box", outline: "none", fontFamily: "inherit", appearance: "none" },
     textarea: { width: "100%", background: darkMode ? "#0d0d18" : "#f8f8fc", border: `1px solid ${border}`, borderRadius: 10, padding: "12px 14px", color: fg, fontSize: 14, boxSizing: "border-box", outline: "none", fontFamily: "inherit", resize: "vertical", minHeight: 200 },
     sendBtn: { width: "100%", background: formStatus === "sending" ? "#555" : "linear-gradient(135deg, #7c5cfc, #4fa3e0)", color: "#fff", border: "none", borderRadius: 10, padding: "14px 0", fontWeight: 700, cursor: formStatus === "sending" ? "not-allowed" : "pointer", fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 4 },
     footer: { background: darkMode ? "#050508" : "#e8e8f0", borderTop: `1px solid ${border}`, padding: "48px 3% 32px" },
@@ -239,75 +393,83 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes blink      { 0%,100%{opacity:1} 50%{opacity:0} }
+        @keyframes fadeUp     { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes float      { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes shimmer    { 0%{background-position:200% center} 100%{background-position:-200% center} }
+        @keyframes pulse-ring { 0%{transform:scale(1);opacity:0.6} 70%{transform:scale(1.5);opacity:0} 100%{transform:scale(1.5);opacity:0} }
+        @keyframes pop-in     { 0%{opacity:0;transform:scale(0.85) translateY(16px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
+        @keyframes modal-in   { from{opacity:0;transform:scale(0.94) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
         .hero-a1 { animation: fadeUp 0.8s ease both; }
         .hero-a2 { animation: fadeUp 0.8s 0.15s ease both; }
         .hero-a3 { animation: fadeUp 0.8s 0.3s ease both; }
         .hero-a4 { animation: fadeUp 0.8s 0.45s ease both; }
-        .card-hover:hover { border-color: #7c5cfc !important; transform: translateY(-3px); }
-        .proj-hover:hover { transform: translateY(-4px); border-color: #7c5cfc !important; }
-        .nav-link:hover { color: #fff !important; }
-        .orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; animation: float 8s ease-in-out infinite; }
-        .service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-        .proj-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; align-items:start; }
-        input::placeholder, textarea::placeholder { color: #555566; }
-        input:focus, textarea:focus, select:focus { border-color: #7c5cfc !important; }
-        ::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
-        @keyframes shimmer    { 0%{background-position:200% center} 100%{background-position:-200% center} }
-        @keyframes pulse-ring { 0%{transform:scale(1);opacity:0.6} 70%{transform:scale(1.5);opacity:0} 100%{transform:scale(1.5);opacity:0} }
-        @keyframes ticker     { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-        @keyframes pop-in     { 0%{opacity:0;transform:scale(0.85) translateY(16px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
 
-        /* ── Scroll-reveal: children start hidden ── */
-        .reveal-group > * {
-          opacity: 0;
-          transform: translateY(32px);
-          transition: opacity 0.55s ease, transform 0.55s ease;
-        }
-        /* ── When revealed, each direct child staggers in ── */
-        .reveal-group.revealed > *:nth-child(1) { opacity:1; transform:none; transition-delay:0s }
-        .reveal-group.revealed > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.1s }
-        .reveal-group.revealed > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.2s }
-        .reveal-group.revealed > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.3s }
-        .reveal-group.revealed > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.4s }
-        .reveal-group.revealed > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.5s }
+        .reveal-group > * { opacity:0; transform:translateY(32px); transition:opacity 0.55s ease,transform 0.55s ease; }
+        .reveal-group.revealed > *:nth-child(1){opacity:1;transform:none;transition-delay:0s}
+        .reveal-group.revealed > *:nth-child(2){opacity:1;transform:none;transition-delay:0.1s}
+        .reveal-group.revealed > *:nth-child(3){opacity:1;transform:none;transition-delay:0.2s}
+        .reveal-group.revealed > *:nth-child(4){opacity:1;transform:none;transition-delay:0.3s}
+        .reveal-group.revealed > *:nth-child(5){opacity:1;transform:none;transition-delay:0.4s}
+        .reveal-group.revealed > *:nth-child(6){opacity:1;transform:none;transition-delay:0.5s}
 
-        .reveal-heading { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease; }
-        .reveal-heading.in { opacity:1; transform:none; }
+        .orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; animation:float 8s ease-in-out infinite; }
         .shimmer-text { background:linear-gradient(90deg,#7c5cfc,#4fa3e0,#7c5cfc,#4fa3e0); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:shimmer 4s linear infinite; }
         .pulse-wrap { position:relative; display:inline-flex; align-items:center; padding-left:14px; }
         .pulse-wrap::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:7px; height:7px; border-radius:50%; background:#22c55e; animation:pulse-ring 2s ease-out infinite; }
+
         .nav-link { position:relative; }
         .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:#7c5cfc; border-radius:2px; transition:width 0.25s ease; }
+        .nav-link:hover { color:#fff !important; }
         .nav-link:hover::after { width:100%; }
+
         .card-hover:hover { border-color:#7c5cfc !important; transform:translateY(-6px) !important; box-shadow:0 16px 40px rgba(124,92,252,0.18) !important; }
         .card-hover:hover .card-icon-inner { transform:scale(1.15) rotate(-6deg); }
         .card-icon-inner { transition:transform 0.3s; }
+
         .proj-hover:hover { transform:translateY(-6px) !important; border-color:#7c5cfc !important; box-shadow:0 20px 48px rgba(0,0,0,0.35) !important; }
         .proj-hover:hover .proj-hex { transform:scale(1.12) rotate(12deg); opacity:0.5; }
-        .proj-hex { transition:transform 0.4s ease, opacity 0.4s ease; }
+        .proj-hex { transition:transform 0.4s ease,opacity 0.4s ease; }
+
         .team-card-hover:hover { border-color:#7c5cfc !important; transform:translateY(-4px); box-shadow:0 16px 40px rgba(124,92,252,0.15) !important; }
         .team-card-hover:hover .team-photo { transform:scale(1.05); }
         .team-photo { transition:transform 0.4s ease; }
+
         .process-step-hover:hover .process-icon { transform:scale(1.12) rotate(-8deg); box-shadow:0 8px 24px rgba(124,92,252,0.35); }
-        .process-icon { transition:transform 0.35s ease, box-shadow 0.35s ease; }
+        .process-icon { transition:transform 0.35s ease,box-shadow 0.35s ease; }
+
         .tech-tag-hover:hover { border-color:#7c5cfc !important; color:#7c5cfc !important; transform:translateY(-2px); }
-        .btn-press:active { transform:scale(0.96) !important; }
-        .send-btn-hover:hover:not(:disabled) { opacity:0.88; transform:translateY(-1px); }
-        .footer-link-hover:hover { color:#7c5cfc !important; }
-        .ticker-outer { overflow:hidden; border-top:1px solid #1e1e2e; border-bottom:1px solid #1e1e2e; padding:14px 0; }
-        .ticker-track { display:flex; width:max-content; animation:ticker 28s linear infinite; }
-        .ticker-track:hover { animation-play-state:paused; }
+
+        .modal-slide-in { animation:modal-in 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+        .modal-link-hover:hover { border-color:#7c5cfc !important; }
+
         .pop-in { animation:pop-in 0.4s ease both; }
+
+        input::placeholder, textarea::placeholder { color:#555566; }
+        input:focus, textarea:focus { border-color:#7c5cfc !important; }
+        ::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
       `}</style>
+
+      {/* ── PROJECT MODAL ── */}
+      {selectedProject && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+          darkMode={darkMode} border={border} muted={muted} fg={fg} cardBg={cardBg} accent={accent}
+        />
+      )}
 
       {/* ── NAV ── */}
       <nav style={s.nav}>
         <div style={s.logo}>
-          <div style={s.logoBox}>V</div>
-          Vexora
+          {/*
+            Logo image: replace the "L" below with:
+              <img src="/images/lioris_logo.png" alt="Lioris" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+            once you upload your logo asset.
+          */}
+          <div style={s.logoBox}>L</div>
+          Lioris
         </div>
         <ul style={s.navLinks}>
           {NAV_LINKS.map(l => (
@@ -339,18 +501,15 @@ export default function App() {
           We build <span className="shimmer-text">{typedText}</span><span style={s.heroCursor} /><br />that scale.
         </h1>
         <p className="hero-a3" style={s.heroSub}>
-          Vexora is a tight-knit duo of full-stack engineers shipping premium products for founders who care about craft. From zero to launched in weeks — not quarters.
+          Lioris is a tight-knit duo of full-stack engineers shipping premium products for founders who care about craft. From zero to launched in weeks — not quarters.
         </p>
         <div className="hero-a4" style={s.heroButtons}>
           <button style={s.btnPrimary} onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}>View Our Work →</button>
           <button style={s.btnOutline} onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>Let's Talk</button>
         </div>
+        {/* Stats: only "Currently available" */}
         <div className="hero-a4" style={s.heroStats}>
           <span className="pulse-wrap">Currently available</span>
-          <span style={{ color: "#2a2a3e" }}>•</span>
-          <span>40+ projects shipped</span>
-          <span style={{ color: "#2a2a3e" }}>•</span>
-          <span>★ 5.0 client rating</span>
         </div>
       </section>
 
@@ -358,9 +517,8 @@ export default function App() {
       <div id="services" style={{ background: darkMode ? "#060609" : "#f8f8fc", borderTop: `1px solid ${border}` }}>
         <div style={s.section}>
           <div style={s.sectionTag}>What We Do</div>
-          <h2 style={s.sectionH2}>Services built for<br />ambitious teams</h2>
+          <h2 style={s.sectionH2}>Services built for ambitious teams</h2>
           <p style={s.sectionSub}>A focused offering. No fluff. Just the things that move the needle for product-led companies.</p>
-          {/* ── FIX: RevealGrid IS the grid — cards are direct children ── */}
           <RevealGrid style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
             {SERVICES.map(svc => (
               <div key={svc.title} style={s.card} className="card-hover">
@@ -394,7 +552,6 @@ export default function App() {
               <button key={f} style={s.filterBtn(activeFilter === f)} onClick={() => setActiveFilter(f)}>{f}</button>
             ))}
           </div>
-          {/* ── FIX: RevealGrid IS the grid — project cards are direct children ── */}
           <RevealGrid style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20, alignItems: "start" }}>
             {filteredProjects.map(p => (
               <div key={p.title} style={s.projCard(p.color)} className="proj-hover">
@@ -406,7 +563,8 @@ export default function App() {
                   <div style={s.projTitle}>{p.title}</div>
                   <div style={s.projDesc}>{p.desc}</div>
                   <div style={s.tags}>{p.techs.map(t => <span key={t} style={s.tag}>{t}</span>)}</div>
-                  <div style={s.caseLink}>View Case Study →</div>
+                  {/* "View →" opens the modal */}
+                  <button style={s.viewBtn} onClick={() => setSelectedProject(p)}>View →</button>
                 </div>
               </div>
             ))}
@@ -496,12 +654,12 @@ export default function App() {
               <textarea style={s.textarea} placeholder="Tell us about your project, goals, and timeline..." value={formData.message} onChange={e => setFormData(f => ({ ...f, message: e.target.value }))} />
             </div>
             {formStatus === "success" && (
-              <div className="pop-in" style={{ background: "#0d2a1a", border: "1px solid #22c55e", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#22c55e", marginBottom: 12, textAlign: "center" }}>
-                 Message sent! We'll get back to you within 24 hours.
+              <div className="pop-in" style={{ background: "#0d2a1a", border: "1px solid #22c55e", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#22c55e", textAlign: "center" }}>
+                Message sent! We'll get back to you within 24 hours.
               </div>
             )}
             {formStatus === "error" && (
-              <div className="pop-in" style={{ background: "#2a0d0d", border: "1px solid #ef4444", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#ef4444", marginBottom: 12, textAlign: "center" }}>
+              <div className="pop-in" style={{ background: "#2a0d0d", border: "1px solid #ef4444", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#ef4444", textAlign: "center" }}>
                 Something went wrong. Please email us directly at dhritidh947@gmail.com
               </div>
             )}
@@ -516,7 +674,10 @@ export default function App() {
       <footer style={s.footer}>
         <div style={s.footerInner}>
           <div>
-            <div style={s.logo}><div style={s.logoBox}>V</div>Vexora</div>
+            <div style={s.logo}>
+              <div style={s.logoBox}>L</div>
+              Lioris
+            </div>
             <div style={s.footerDesc}>We build products that scale. A boutique full-stack development studio.</div>
           </div>
           <div>
@@ -539,7 +700,7 @@ export default function App() {
           </div>
         </div>
         <div style={s.footerBottom}>
-          <span>© 2025 Vexora. All rights reserved.</span>
+          <span>© 2025 Lioris. All rights reserved.</span>
           <span>Built with ♥ and a lot of caffeine</span>
         </div>
       </footer>
