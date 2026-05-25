@@ -588,10 +588,10 @@ export default function App() {
             <p style={{ ...s.sectionSub, marginBottom: 40 }}>Have a project in mind? Reach out to either of us and we'll get back to you.</p>
             <div style={s.contactInfo}>
               {[
-                { icon: "✉", label: "Dhriti's Email", val: "dhritidh947@gmail.com" },
-                { icon: "✉", label: "Pavan's Email", val: "pasupuletipavan2104@gmail.com" },
-                { icon: "📞", label: "Dhriti's Phone", val: "+91-9035445488" },
-                { icon: "📞", label: "Pavan's Phone", val: "+91 9550904872" },
+                // { icon: "✉", label: "Dhriti's Email", val: "dhritidh947@gmail.com" },
+                { icon: "✉", label: "Email", val: "lioris.officialdev@gmail.com" },
+                { icon: "📞", label: "Phone number 1", val: "+91-9035445488" },
+                { icon: "📞", label: "Phone number 2", val: "+91 9550904872" },
                 { icon: "⚲", label: "Location", val: "Karnataka, India" },
               ].map(item => (
                 <div key={item.label} style={s.contactItem}>
@@ -626,7 +626,7 @@ export default function App() {
             )}
             {formStatus === "error" && (
               <div className="pop-in" style={{ background: "#2a0d0d", border: "1px solid #ef4444", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#ef4444", textAlign: "center" }}>
-                Something went wrong. Please email us directly at dhritidh947@gmail.com
+                Something went wrong. Please email us directly at lioris.officialdev@gmail.com
               </div>
             )}
             <button style={s.sendBtn} onClick={handleSend} disabled={formStatus === "sending"}>
@@ -641,8 +641,8 @@ export default function App() {
         <div style={s.footerInner}>
           <div>
             <div style={s.logo}>
-              <div style={{ ...s.logoBox, fontSize: 11, fontWeight: 900 }}>DP</div>
-              Lioris
+              <img src="./Lioris (2).png" alt="Lioris Logo" style={s.logoBox} />{" "}
+              <span>Lioris</span>
             </div>
             <div style={s.footerDesc}>Full-stack developers building modern web and mobile applications. Based in Karnataka, India.</div>
           </div>
@@ -666,7 +666,7 @@ export default function App() {
           </div>
         </div>
         <div style={s.footerBottom}>
-          <span>© 2025 Dhriti R & Pasupuleti Pavan. All rights reserved.</span>
+          <span>© 2026 Dhriti R & Pasupuleti Pavan. All rights reserved.</span>
           <span>Built with ♥ and a lot of caffeine</span>
         </div>
       </footer>
