@@ -5,7 +5,7 @@ const NAV_LINKS = ["Services", "Work", "Team", "Contact"];
 
 const SERVICES = [
   { icon: "</>", title: "Full-Stack Web Development", desc: "Scalable web applications built end-to-end with React, Node.js, and the MERN stack — modern and production-ready." },
-  { icon: "📱", title: "Mobile App Development", desc: "Cross-platform mobile applications using React Native with clean architecture and optimized performance." },
+  { icon: "🀆", title: "Mobile App Development", desc: "Cross-platform mobile applications using React Native with clean architecture and optimized performance." },
   { icon: "⇌", title: "REST API Development", desc: "High-performance RESTful APIs with secure authentication, authorization, and efficient data management." },
   { icon: "◈", title: "AI/ML Solutions", desc: "Machine learning models and AI-powered features integrated into web applications for intelligent automation." },
   { icon: "▤", title: "Database Design & Management", desc: "MongoDB, PostgreSQL, and SQL database architecture optimized for performance and scalability." },
@@ -67,9 +67,11 @@ const TEAM = [
 const FILTER_TABS = ["All", "Web App", "AI/ML", "SaaS"];
 
 
-const EMAILJS_SERVICE_ID  = "service_491rw2e";
-const EMAILJS_TEMPLATE_ID = "template_ng8svy8";
-const EMAILJS_PUBLIC_KEY  = "K_PZM9TajVUWCXJNT";
+const EMAILJS_SERVICE_ID  = "service_cggfuuj";
+const EMAILJS_TEMPLATE_ID = "template_c0ak3ir";
+const EMAILJS_PUBLIC_KEY  = "sLOyOpQCECOc2Qkka";
+
+
 
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
@@ -236,6 +238,9 @@ export default function App() {
   const wordRef = useRef(0);
   const charRef = useRef(0);
   const deletingRef = useRef(false);
+  
+  const [formError, setFormError] = useState("");
+  
 
   useEffect(() => {
     let timeout;
@@ -271,24 +276,35 @@ export default function App() {
   }, []);
 
   const handleSend = async () => {
-    const { name, email, message } = formData;
-    if (!name.trim() || !email.trim() || !message.trim()) {
-      alert("Please fill in your name, email, and project description.");
-      return;
-    }
-    setFormStatus("sending");
-    try {
-      await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name: name, from_email: email, message,
-        to_email: "dhritidh947@gmail.com",
-      });
-      setFormStatus("success");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (err) {
-      console.error(err);
-      setFormStatus("error");
-    }
-  };
+  const { name, email, message } = formData;
+
+  if (!name.trim() || !email.trim() || !message.trim()) {
+    setFormError("Please fill all fields before submitting.");
+    
+    // auto-hide after 3 sec
+    setTimeout(() => setFormError(""), 4000);
+    return;
+  }
+
+  setFormError("");
+  setFormStatus("sending");
+
+  try {
+    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: name,
+      from_email: email,
+      message,
+      to_email: "lioris.officialdev@gmail.com",
+    });
+
+    setFormStatus("success");
+    setFormData({ name: "", email: "", message: "" });
+
+  } catch (err) {
+    console.error(err);
+    setFormStatus("error");
+  }
+};
 
   const filteredProjects = activeFilter === "All" ? PROJECTS : PROJECTS.filter(p => p.tag === activeFilter);
 
@@ -337,18 +353,42 @@ export default function App() {
     techTag: { background: darkMode ? "#111118" : "#fff", border: `1px solid ${border}`, borderRadius: 20, padding: "8px 18px", fontSize: 13, fontWeight: 600, color: muted },
     filterRow: { display: "flex", gap: 10, marginBottom: 36, flexWrap: "wrap" },
     filterBtn: (active) => ({ background: active ? accent : (darkMode ? "#111118" : "#fff"), color: active ? "#fff" : muted, border: `1px solid ${active ? accent : border}`, borderRadius: 20, padding: "7px 18px", fontWeight: 600, fontSize: 13, cursor: "pointer" }),
-    projCard: (color) => ({ background: darkMode ? color : "#fafafa", border: `1px solid ${border}`, borderRadius: 16, overflow: "hidden", transition: "transform 0.2s, border-color 0.2s", display: "flex", flexDirection: "column" }),
+    projCard: (color) => ({ background: darkMode ? color : "#fafafa", border: `1px solid ${border}`, borderRadius: 16, overflow: "hidden", transition: "transform 0.2s, border-color 0.2s", display: "flex", flexDirection: "column", position: "relative",height: "100%",}),
     projImg: (color) => ({ height: 170, background: `linear-gradient(135deg, ${color}, ${color}88)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 40, position: "relative", flexShrink: 0 }),
     projTag: { position: "absolute", top: 12, left: 12, background: "rgba(255,255,255,0.12)", borderRadius: 6, padding: "3px 10px", fontSize: 11, fontWeight: 700, color: "#fff", backdropFilter: "blur(4px)" },
-    projBody: { padding: "20px 20px 24px", display: "flex", flexDirection: "column", flex: 1 },
+    projBody: { padding: "20px 20px 48px", display: "flex", flexDirection: "column", flex: 1 },
     projTitle: { fontWeight: 800, fontSize: 16, marginBottom: 8, color: fg, lineHeight: 1.3 },
     projDesc: { color: muted, fontSize: 13, lineHeight: 1.65, marginBottom: 14, flexGrow: 1 },
     tags: { display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 },
-    tag: { background: darkMode ? "#1a1a2e" : "#f0f0fa", color: accent, fontSize: 11, fontWeight: 700, borderRadius: 6, padding: "3px 10px" },
-    viewBtn: { color: accent, fontSize: 13, fontWeight: 700, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 4, background: "none", border: "none", padding: 0, fontFamily: "inherit" },
+    tag: { background: darkMode ? "#1a1a2e" : "#f0f0fa", color: accent, fontSize: 11, fontWeight: 700, borderRadius: 6, padding: "3px 10px", marginBottom: 10, },
+    viewBtnContainer: {
+  position: "absolute",
+  bottom: 16,
+  right: 16,
+  
+},
+viewBtn: {
+  color: "#A78BFA",
+  fontSize: 13,
+  fontWeight: 600,
+  cursor: "pointer",
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 6,
+  background: "transparent", 
+  border: "none",           
+  padding: "4px 6px",
+  borderRadius: "6px",
+  opacity: 0.8,
+  transition: "all 0.2s ease",
+},
+viewBtnHover: {
+  opacity: 1,
+  transform: "translateY(-1px)",
+},
     teamGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24, justifyItems: "center" },
     teamCard: { background: darkMode ? "linear-gradient(135deg, rgba(20,20,35,0.9), rgba(15,15,25,0.7))" : "#ffffff", border: `1px solid ${border}`, borderRadius: 20, padding: "24px 28px", display: "flex", gap: 22, alignItems: "center", width: "100%", maxWidth: 420, boxSizing: "border-box", backdropFilter: "blur(12px)", transition: "all 0.3s ease" },
-    teamImage: { width: 100, height: 130, borderRadius: 14, objectFit: "cover", border: `2px solid ${border}`, boxShadow: "0 8px 20px rgba(0,0,0,0.25)", flexShrink: 0 },
+    teamImage: { width: 140, height: 220, borderRadius: 14, objectFit: "cover", border: `2px solid ${border}`, boxShadow: "0 8px 20px rgba(0,0,0,0.25)", flexShrink: 0 },
     teamInfo: { display: "flex", flexDirection: "column", gap: 4, minWidth: 0 },
     teamName: { fontWeight: 800, fontSize: 17, color: fg, lineHeight: 1.2 },
     teamRole: { color: accent, fontSize: 12, fontWeight: 600, marginBottom: 6 },
@@ -360,7 +400,7 @@ export default function App() {
     contactIconBox: { width: 40, height: 40, borderRadius: 10, background: darkMode ? "#1a1a30" : "#ebebff", border: `1px solid ${border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 },
     contactLabel: { fontSize: 11, fontWeight: 700, color: muted, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 },
     contactVal: { fontWeight: 600, fontSize: 15, color: fg },
-    formCard: { background: cardBg, border: `1px solid ${border}`, borderRadius: 20, padding: 32, boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 16 },
+    formCard: { background: cardBg,border: `1px solid ${border}`, borderRadius: 20, padding: 32, boxSizing: "border-box", display: "flex", flexDirection: "column", gap: 18 ,height:"100%",width:"90%",minWidth: 320,alignSelf: "center"},
     formRow: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 },
     formGroup: { display: "flex", flexDirection: "column" },
     label: { display: "block", fontSize: 12, fontWeight: 700, color: muted, marginBottom: 7, textTransform: "uppercase", letterSpacing: "0.08em" },
@@ -482,8 +522,7 @@ export default function App() {
           We build <span className="shimmer-text">{typedText}</span><span style={s.heroCursor} /><br />that deliver.
         </h1>
         <p className="hero-a3" style={s.heroSub}>
-          We are Dhriti and Pavan — two full-stack developers passionate about building efficient, user-centric applications. From web and mobile apps to AI-powered solutions, we ship products that make an impact.
-        </p>
+We are a team of full-stack developers focused on building scalable, high-performance applications. From web and mobile platforms to intelligent, data-driven solutions, we turn ideas into seamless digital experiences that deliver real impact.        </p>
         <div className="hero-a4" style={s.heroButtons}>
           <button style={s.btnPrimary} onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })}>View Our Work →</button>
           <button style={s.btnOutline} onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>Get in Touch</button>
@@ -532,23 +571,33 @@ export default function App() {
               <button key={f} style={s.filterBtn(activeFilter === f)} onClick={() => setActiveFilter(f)}>{f}</button>
             ))}
           </div>
-          <RevealGrid style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20, alignItems: "start" }}>
-            {filteredProjects.map(p => (
-              <div key={p.title} style={s.projCard(p.color)} className="proj-hover">
-                <div style={s.projImg(p.color)}>
-                  <span style={s.projTag}>{p.tag}</span>
-                  <span className="proj-hex" style={{ fontSize: 48, opacity: 0.35 }}>⬡</span>
-                </div>
-                <div style={s.projBody}>
-                  <div style={s.projTitle}>{p.title}</div>
-                  <div style={s.projDesc}>{p.desc}</div>
-                  <div style={s.tags}>{p.techs.map(t => <span key={t} style={s.tag}>{t}</span>)}</div>
-                  {/* "View →" opens the modal */}
-                  <button style={s.viewBtn} onClick={() => setSelectedProject(p)}>View →</button>
-                </div>
-              </div>
-            ))}
-          </RevealGrid>
+          <RevealGrid style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20, alignItems: "stretch" }}>
+  {filteredProjects.map(p => (
+    <div key={p.title} style={s.projCard(p.color)} className="proj-hover">
+
+      <div style={s.projImg(p.color)}>
+        <span style={s.projTag}>{p.tag}</span>
+        <span className="proj-hex" style={{ fontSize: 48, opacity: 0.35 }}>⬡</span>
+      </div>
+
+      <div style={s.projBody}>
+        <div style={s.projTitle}>{p.title}</div>
+        <div style={s.projDesc}>{p.desc}</div>
+        <div style={s.tags}>
+          {p.techs.map(t => <span key={t} style={s.tag}>{t}</span>)}
+        </div>
+      </div>
+
+   
+      <div style={s.viewBtnContainer}>
+        <button className="view-btn" style={s.viewBtn} onClick={() => setSelectedProject(p)}>
+          View ➔
+        </button>
+      </div>
+
+    </div>
+  ))}
+</RevealGrid>
         </div>
       </div>
 
@@ -579,67 +628,156 @@ export default function App() {
 
 
 
-      {/* ── CONTACT ── */}
-      <div id="contact" style={s.contactSection}>
-        <div style={s.contactInner}>
-          <div>
-            <div style={s.sectionTag}>Get In Touch</div>
-            <h2 style={s.sectionH2}>Let's work together</h2>
-            <p style={{ ...s.sectionSub, marginBottom: 40 }}>Have a project in mind? Reach out to either of us and we'll get back to you.</p>
-            <div style={s.contactInfo}>
-              {[
-                // { icon: "✉", label: "Dhriti's Email", val: "dhritidh947@gmail.com" },
-                { icon: "✉", label: "Email", val: "lioris.officialdev@gmail.com" },
-                { icon: "📞", label: "Phone number 1", val: "+91-9035445488" },
-                { icon: "📞", label: "Phone number 2", val: "+91 9550904872" },
-                { icon: "⚲", label: "Location", val: "Karnataka, India" },
-              ].map(item => (
-                <div key={item.label} style={s.contactItem}>
-                  <div style={s.contactIconBox}>{item.icon}</div>
-                  <div>
-                    <div style={s.contactLabel}>{item.label}</div>
-                    <div style={s.contactVal}>{item.val}</div>
-                  </div>
-                </div>
-              ))}
+     {/* ── CONTACT ── */}
+<div id="contact" style={s.contactSection}>
+  <div style={s.contactInner}>
+    
+    {/* LEFT SIDE */}
+    <div>
+      <div style={s.sectionTag}>Get In Touch</div>
+      <h2 style={s.sectionH2}>Let's work together</h2>
+      <p style={{ ...s.sectionSub, marginBottom: 40 }}>
+        Have a project in mind? Reach out to either of us and we'll get back to you.
+      </p>
+
+      <div style={s.contactInfo}>
+        {[
+          { icon: "✉", label: "Email", val: "lioris.officialdev@gmail.com" },
+          { icon: "📞", label: "Contact number 1", val: "+91 9035445488" },
+          { icon: "📞", label: "Contact number 2", val: "+91 9550904872" },
+          { icon: "⚲", label: "Location", val: "Karnataka, India" },
+        ].map(item => (
+          <div key={item.label} style={s.contactItem}>
+            <div style={s.contactIconBox}>{item.icon}</div>
+            <div>
+              <div style={s.contactLabel}>{item.label}</div>
+              <div style={s.contactVal}>{item.val}</div>
             </div>
           </div>
-          <div style={s.formCard}>
-            <div style={s.formRow}>
-              <div style={s.formGroup}>
-                <label style={s.label}>Your name</label>
-                <input style={s.input} placeholder="Jane Doe" value={formData.name} onChange={e => setFormData(f => ({ ...f, name: e.target.value }))} />
-              </div>
-              <div style={s.formGroup}>
-                <label style={s.label}>Email</label>
-                <input style={s.input} placeholder="jane@company.com" value={formData.email} onChange={e => setFormData(f => ({ ...f, email: e.target.value }))} />
-              </div>
-            </div>
-            <div style={s.formGroup}>
-              <label style={s.label}>Project description</label>
-              <textarea style={s.textarea} placeholder="Tell us about your project, goals, and timeline..." value={formData.message} onChange={e => setFormData(f => ({ ...f, message: e.target.value }))} />
-            </div>
-            {formStatus === "success" && (
-              <div className="pop-in" style={{ background: "#0d2a1a", border: "1px solid #22c55e", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#22c55e", textAlign: "center" }}>
-                Message sent! We'll get back to you shortly.
-              </div>
-            )}
-            {formStatus === "error" && (
-              <div className="pop-in" style={{ background: "#2a0d0d", border: "1px solid #ef4444", borderRadius: 10, padding: "12px 16px", fontSize: 14, color: "#ef4444", textAlign: "center" }}>
-                Something went wrong. Please email us directly at lioris.officialdev@gmail.com
-              </div>
-            )}
-            <button style={s.sendBtn} onClick={handleSend} disabled={formStatus === "sending"}>
-              {formStatus === "sending" ? "Sending…" : "Send message →"}
-            </button>
-          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* RIGHT SIDE FORM */}
+    <div>
+    <div style={s.formCard}>
+
+      <div style={s.formRow}>
+        <div style={s.formGroup}>
+          <label style={s.label}>Your name</label>
+          <input
+            style={{
+              ...s.input,
+              border: formError && !formData.name ? "1px solid #ef4444" : s.input.border,
+            }}
+            placeholder="Jane Doe"
+            value={formData.name}
+            onChange={e => setFormData(f => ({ ...f, name: e.target.value }))}
+          />
+        </div>
+
+        <div style={s.formGroup}>
+          <label style={s.label}>Email</label>
+          <input
+            style={{
+              ...s.input,
+              border: formError && !formData.email ? "1px solid #ef4444" : s.input.border,
+            }}
+            placeholder="jane@company.com"
+            value={formData.email}
+            onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
+          />
         </div>
       </div>
+
+      <div style={s.formGroup}>
+        <label style={s.label}>Project description</label>
+        <textarea
+          style={{
+            ...s.textarea,
+            border: formError && !formData.message ? "1px solid #ef4444" : s.textarea.border,
+          }}
+          placeholder="Tell us about your project, goals, and timeline..."
+          value={formData.message}
+          onChange={e => setFormData(f => ({ ...f, message: e.target.value }))}
+        />
+      </div>
+      
+
+      {/* 🔴 VALIDATION ERROR */}
+      {formError && (
+        <div
+          className="pop-in"
+          style={{
+            background: "#2a0d0d",
+            border: "1px solid #ef4444",
+            borderRadius: 10,
+            padding: "12px 16px",
+            fontSize: 14,
+            color: "#ef4444",
+            textAlign: "center",
+            marginBottom: 12,
+          }}
+        >
+          {formError}
+        </div>
+      )}
+
+      {/* 🟢 SUCCESS */}
+      {formStatus === "success" && (
+        <div
+          className="pop-in"
+          style={{
+            background: "#0d2a1a",
+            border: "1px solid #22c55e",
+            borderRadius: 10,
+            padding: "12px 16px",
+            fontSize: 14,
+            color: "#22c55e",
+            textAlign: "center",
+            marginBottom: 12,
+          }}
+        >
+          Message sent! We'll get back to you shortly.
+        </div>
+      )}
+
+      {/* 🔴 SEND ERROR */}
+      {formStatus === "error" && (
+        <div
+          className="pop-in"
+          style={{
+            background: "#2a0d0d",
+            border: "1px solid #ef4444",
+            borderRadius: 10,
+            padding: "12px 16px",
+            fontSize: 14,
+            color: "#ef4444",
+            textAlign: "center",
+            marginBottom: 12,
+          }}
+        >
+          Something went wrong. Please email us directly.
+        </div>
+      )}
+
+      {/* BUTTON */}
+      <button
+        style={s.sendBtn}
+        onClick={handleSend}
+        disabled={formStatus === "sending"}
+      >
+        {formStatus === "sending" ? "Sending…" : "Send message →"}
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
 
       {/* ── FOOTER ── */}
       <footer style={s.footer}>
         <div style={s.footerInner}>
-          <div>
+          <div style={{ marginLeft: 100 }}>
             <div style={s.logo}>
               <img src="./Lioris (2).png" alt="Lioris Logo" style={s.logoBox} />{" "}
               <span>Lioris</span>
@@ -666,7 +804,7 @@ export default function App() {
           </div>
         </div>
         <div style={s.footerBottom}>
-          <span>© 2026 Dhriti R & Pasupuleti Pavan. All rights reserved.</span>
+          <span>© 2026 Lioris. All rights reserved.</span>
           <span>Built with ♥ and a lot of caffeine</span>
         </div>
       </footer>
