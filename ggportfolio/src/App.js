@@ -3,6 +3,8 @@ import { FiX, FiGithub, FiExternalLink } from "react-icons/fi";
 
 const NAV_LINKS = ["Services", "Work", "Team", "Contact"];
 
+const FILTER_TABS = ["All", "Web App", "AI/ML", "SaaS"];
+
 const SERVICES = [
   { icon: "</>", title: "Full-Stack Web Development", desc: "Scalable web applications built end-to-end with React, Node.js, and the MERN stack — modern and production-ready." },
   { icon: "🀆", title: "Mobile App Development", desc: "Cross-platform mobile applications using React Native with clean architecture and optimized performance." },
@@ -64,7 +66,7 @@ const TEAM = [
   { name: "Pasupuleti Pavan", role: "Full-Stack Developer", bio: "Software developer with expertise in full-stack development, AI/ML, and database technologies. Experienced in building enterprise applications and delivering user-centric solutions.", image: "/images/Pavan_image.jpeg", email: "ppasupuletibtech22@ced.alliance.edu.in", phone: "+91 9550904872", linkedin: "https://www.linkedin.com/in/pasupuleti-pavan/" },
 ];
 
-const FILTER_TABS = ["All", "Web App", "AI/ML", "SaaS"];
+
 
 
 const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
@@ -239,7 +241,7 @@ export default function App() {
   
   const [formError, setFormError] = useState("");
   
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let timeout;
     const type = () => {
