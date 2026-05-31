@@ -15,7 +15,7 @@ const SERVICES = [
 ];
 
 const TECH = ["React.js", "React Native", "Node.js", "Express.js", "MongoDB", "Python", "JavaScript", "TypeScript", "Django", "TensorFlow", "Tailwind CSS", "Git", "GitHub", "REST APIs", "JWT", "Socket.io", "PostgreSQL", "Spring Boot"];
-
+const words = ["Web Apps", "Mobile Apps", "APIs", "Full-Stack Solutions"];
 const PROJECTS = [
   {
     tag: "SaaS", title: "DayFlow - Daily Habit Tracker", desc: "Premium daily activity tracking SaaS built with Next.js, TypeScript, and AI-powered insights.",
@@ -234,7 +234,7 @@ export default function App() {
   const [formStatus, setFormStatus] = useState("idle");
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const words = ["Web Apps", "Mobile Apps", "APIs", "Full-Stack Solutions"];
+ 
   const wordRef = useRef(0);
   const charRef = useRef(0);
   const deletingRef = useRef(false);
