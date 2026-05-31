@@ -67,9 +67,9 @@ const TEAM = [
 const FILTER_TABS = ["All", "Web App", "AI/ML", "SaaS"];
 
 
-const EMAILJS_SERVICE_ID  = "service_cggfuuj";
-const EMAILJS_TEMPLATE_ID = "template_c0ak3ir";
-const EMAILJS_PUBLIC_KEY  = "sLOyOpQCECOc2Qkka";
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 
 
