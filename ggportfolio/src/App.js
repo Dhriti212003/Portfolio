@@ -446,7 +446,7 @@ viewBtnHover: {
         .orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; animation:float 8s ease-in-out infinite; }
         .shimmer-text { background:linear-gradient(90deg,#7c5cfc,#4fa3e0,#7c5cfc,#4fa3e0); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:shimmer 4s linear infinite; }
         .pulse-wrap { position:relative; display:inline-flex; align-items:center; padding-left:14px; }
-        .pulse-wrap::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:7px; height:7px; border-radius:50%; background:#22c55e; animation:pulse-ring 2s ease-out infinite; }
+        .pulse-wrap::before { content:''; position:absolute; left:0; top:30%; transform:translateY(-50%); width:7px; height:7px; border-radius:50%; background:#22c55e; animation:pulse-ring 2s ease-out infinite; }
 
         .nav-link { position:relative; }
         .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:#7c5cfc; border-radius:2px; transition:width 0.25s ease; }
